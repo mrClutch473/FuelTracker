@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Анимация раскрытия блока заметки внутри карточки.
+    Применять к noteRow:
+      noteRow.visibility = View.VISIBLE
+      noteRow.startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_item_expand))
+-->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/decelerate_interpolator">
+
+    <!-- Fade In -->
+    <alpha
+        android:duration="250"
+        android:fromAlpha="0.0"
+        android:toAlpha="1.0" />
+
+    <!-- Expand: scale по Y от 0 до 1, точка трансформации — верхний край -->
+    <scale
+        android:duration="250"
+        android:fromXScale="1.0"
+        android:fromYScale="0.0"
+        android:pivotX="50%"
+        android:pivotY="0%"
+        android:toXScale="1.0"
+        android:toYScale="1.0" />
+
+</set>

@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A0D14">
+
+    <!-- ══════════════════════════════════════════
+         APP BAR
+    ══════════════════════════════════════════ -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0A0D14"
+        app:elevation="0dp"
+        app:liftOnScroll="false">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#0A0D14"
+            app:contentInsetStart="0dp"
+            app:contentInsetEnd="0dp"
+            app:contentInsetStartWithNavigation="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="FuelTracker"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/inter_semibold"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <!-- Toolbar bottom divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1E2435" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- ══════════════════════════════════════════
+         SCROLLABLE CONTENT
+    ══════════════════════════════════════════ -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:fillViewport="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp">
+
+            <!-- ──────────────────────────────────
+                 2a. FUEL GAUGE BLOCK
+            ────────────────────────────────── -->
+            <FrameLayout
+                android:id="@+id/fuelGaugeBlock"
+                android:layout_width="match_parent"
+                android:layout_height="240dp">
+
+                <!--
+                    Custom FuelGaugeView — subclass android.view.View in Kotlin,
+                    override onDraw() to render arc gauge with Canvas API.
+                    Background here serves as placeholder only.
+                -->
+                <com.example.fueltracker_android.ui.components.FuelGaugeView
+                    android:id="@+id/fuelGaugeView"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center" />
+
+                <!-- Consumption labels, pinned to bottom-center -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="6dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="последний расход"
+                        android:layout_marginTop="200dp"
+                        android:textColor="#8892A4"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/inter_regular" />
+
+                    <TextView
+                        android:id="@+id/tvConsumption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text=""
+                        android:textColor="#F5A623"
+                        android:textSize="22sp"
+                        android:fontFamily="@font/inter_semibold" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <!-- ──────────────────────────────────
+                 2b. LAST REFUEL SECTION
+            ────────────────────────────────── -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Последняя заправка"
+                android:textColor="#8892A4"
+                android:textSize="14sp"
+                android:fontFamily="@font/inter_regular" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardLastRefuel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="#12161F"
+                app:strokeWidth="1dp"
+                app:strokeColor="#1E2435"
+                app:cardElevation="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <!-- ── ROW 1: Gas station icon / date / total ── -->
+
+                    <!-- ic_local_gas_station — Material icon: "local_gas_station" — fonts.google.com/icons -->
+                    <ImageView
+                        android:id="@+id/icGasRow1"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_local_gas_station"
+                        app:tint="#F5A623"
+                        android:contentDescription="Gas station"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvLastDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text=""
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/inter_regular"
+                        app:layout_constraintStart_toEndOf="@id/icGasRow1"
+                        app:layout_constraintEnd_toStartOf="@id/tvLastTotal"
+                        app:layout_constraintTop_toTopOf="@id/icGasRow1"
+                        app:layout_constraintBottom_toBottomOf="@id/icGasRow1" />
+
+                    <TextView
+                        android:id="@+id/tvLastTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="#F5A623"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/jetbrains_mono_medium"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/icGasRow1"
+                        app:layout_constraintBottom_toBottomOf="@id/icGasRow1" />
+
+                    <!-- ── ROW 2: Speed icon / odometer / liters ── -->
+
+                    <!-- ic_speed — Material icon: "speed" — fonts.google.com/icons -->
+                    <ImageView
+                        android:id="@+id/icSpeedRow2"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_speed"
+                        app:tint="#8892A4"
+                        android:contentDescription="Odometer"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/icGasRow1" />
+
+                    <TextView
+                        android:id="@+id/tvLastOdometer"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text=""
+                        android:textColor="#8892A4"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/inter_regular"
+                        app:layout_constraintStart_toEndOf="@id/icSpeedRow2"
+                        app:layout_constraintEnd_toStartOf="@id/tvLastLiters"
+                        app:layout_constraintTop_toTopOf="@id/icSpeedRow2"
+                        app:layout_constraintBottom_toBottomOf="@id/icSpeedRow2" />
+
+                    <TextView
+                        android:id="@+id/tvLastLiters"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="#8892A4"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/inter_regular"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/icSpeedRow2"
+                        app:layout_constraintBottom_toBottomOf="@id/icSpeedRow2" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ──────────────────────────────────
+                 2c. THIS MONTH SECTION
+            ────────────────────────────────── -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Этот месяц"
+                android:textColor="#8892A4"
+                android:textSize="14sp"
+                android:fontFamily="@font/inter_regular" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <!-- Card: Total spent -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardMonthSpent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardBackgroundColor="#12161F"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#1E2435"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <!-- ic_payments — Material icon: "payments" — fonts.google.com/icons -->
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginBottom="8dp"
+                            android:src="@drawable/ic_payments"
+                            app:tint="#F5A623"
+                            android:contentDescription="Payments" />
+
+                        <TextView
+                            android:id="@+id/tvMonthSpent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textColor="#FFFFFF"
+                            android:textSize="20sp"
+                            android:fontFamily="@font/orbitron_bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="потрачено"
+                            android:textColor="#8892A4"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/inter_regular" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Card: Avg consumption -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardMonthConsumption"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardBackgroundColor="#12161F"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#1E2435"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <!-- ic_local_gas_station — Material icon: "local_gas_station" — fonts.google.com/icons -->
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginBottom="8dp"
+                            android:src="@drawable/ic_local_gas_station"
+                            app:tint="#F5A623"
+                            android:contentDescription="Fuel" />
+
+                        <TextView
+                            android:id="@+id/tvMonthConsumption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textColor="#FFFFFF"
+                            android:textSize="20sp"
+                            android:fontFamily="@font/orbitron_bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="л / 100 км"
+                            android:textColor="#8892A4"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/inter_regular" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <!-- ──────────────────────────────────
+                 2d. CTA BUTTON "Я ЗАПРАВИЛСЯ!"
+            ────────────────────────────────── -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="8dp"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+                <!--
+                    Amber radial glow — animated in Kotlin:
+                    AnimatorInflater.loadAnimator(context, R.animator.anim_breathe)
+                        .apply { setTarget(btnGlow); start() }
+                -->
+                <View
+                    android:id="@+id/btnGlow"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_button_glow"
+                    android:alpha="0.6" />
+
+                <!--
+                    Spring press animation — apply in Kotlin:
+                    btnRefuel.setOnTouchListener { v, event ->
+                        if (event.action == MotionEvent.ACTION_DOWN)
+                            AnimatorInflater.loadAnimator(context, R.animator.anim_button_press)
+                                .apply { setTarget(v); start() }
+                        false
+                    }
+                -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRefuel"
+                    style="@style/Widget.Material3.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center"
+                    android:text="Я заправился!"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/inter_semibold"
+                    android:letterSpacing="0.01"
+                    app:backgroundTint="#F5A623"
+                    app:cornerRadius="12dp"
+                    app:icon="@drawable/ic_local_gas_station"
+                    app:iconSize="20dp"
+                    app:iconGravity="textStart"
+                    app:iconPadding="8dp"
+                    app:iconTint="#FFFFFF" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- ══════════════════════════════════════════
+         BOTTOM NAVIGATION
+    ══════════════════════════════════════════ -->
+    <!--
+        Fade-slide-up animation for sections — apply in Kotlin onViewCreated:
+        listOf(fuelGaugeBlock, cardLastRefuel, cardMonthSpent, cardMonthConsumption, btnRefuel)
+            .forEachIndexed { i, view ->
+                val anim = AnimatorInflater.loadAnimator(context, R.animator.anim_fade_slide_up)
+                    .apply { startDelay = (i * 80L); setTarget(view) }
+                anim.start()
+            }
+    -->
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Layer 1: full background fill with NavBar color -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#0F1219" />
+        </shape>
+    </item>
+
+    <!-- Layer 2: 1dp top border — fills everything with divider color,
+         then Layer 3 covers all but the top 1dp strip -->
+    <item android:top="0dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#1E2435" />
+        </shape>
+    </item>
+
+    <!-- Layer 3: NavBar background starting 1dp from top — "paints over"
+         the divider color everywhere except the top 1dp strip -->
+    <item android:top="1dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#0F1219" />
+        </shape>
+    </item>
+
+</layer-list>

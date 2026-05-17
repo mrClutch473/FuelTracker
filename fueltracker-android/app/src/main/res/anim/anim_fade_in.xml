@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Crossfade появление — 250ms.
+    Используется в nav_graph для переходов между bottom nav вкладками.
+-->
+<alpha
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromAlpha="0.0"
+    android:toAlpha="1.0"
+    android:duration="250"
+    android:interpolator="@android:interpolator/linear" />

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Анимация появления элемента RecyclerView:
+    fade-in + slide-up из 40dp ниже позиции.
+    Применять в адаптере:
+      itemView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_item_enter))
+-->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/decelerate_interpolator">
+
+    <!-- Fade In: alpha 0 → 1 -->
+    <alpha
+        android:duration="350"
+        android:fromAlpha="0.0"
+        android:toAlpha="1.0" />
+
+    <!-- Slide Up: translateY 40dp → 0 -->
+    <translate
+        android:duration="350"
+        android:fromYDelta="40dp"
+        android:toYDelta="0dp" />
+
+</set>

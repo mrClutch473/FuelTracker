@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Левая цветная полоска карточки заправки — зелёная.
+    Скруглены только левые углы (topLeftRadius + bottomLeftRadius),
+    чтобы вписаться в скруглённую карточку MaterialCardView.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="#00E676" />
+
+    <corners
+        android:topLeftRadius="16dp"
+        android:topRightRadius="0dp"
+        android:bottomLeftRadius="16dp"
+        android:bottomRightRadius="0dp" />
+
+</shape>

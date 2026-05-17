@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A0D14">
+
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- APP BAR + PERIOD SELECTOR                      -->
+    <!-- ══════════════════════════════════════════════ -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0A0D14"
+        app:elevation="0dp"
+        app:liftOnScroll="true"
+        app:liftOnScrollColor="#0D1018">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#0A0D14"
+            app:title="Статистика"
+            app:titleTextAppearance="@font/inter_semibold"
+            app:titleTextColor="#FFFFFF"
+            app:navigationContentDescription="menu" />
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- SCROLLABLE CONTENT                             -->
+    <!-- ══════════════════════════════════════════════ -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="24dp">
+
+            <!-- ── 3a. SUMMARY CARDS 2×2 GRID ─────────── -->
+
+            <!-- Row 1 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Card 1: Средний расход -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardAvgConsumption"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    app:cardBackgroundColor="#12161F"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="#1E2435"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <!-- ic_local_gas_station — fonts.google.com/icons -->
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            app:srcCompat="@drawable/ic_local_gas_station"
+                            app:tint="#4FC3F7"
+                            android:scaleType="fitCenter"
+                            android:contentDescription="local_gas_station" />
+
+                        <TextView
+                            android:id="@+id/tvAvgConsumption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="8.4"
+                            android:textColor="#FFFFFF"
+                            android:textSize="28sp"
+                            android:fontFamily="@font/orbitron_bold"
+                            android:layout_marginTop="8dp"
+                            tools:ignore="HardcodedText" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="л / 100 км"
+                            android:textColor="#8892A4"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/inter_regular"
+                            android:layout_marginTop="2dp"
+                            tools:ignore="HardcodedText" />
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Card 2: Лучший расход -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardBestConsumption"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    app:cardBackgroundColor="#12161F"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="#1E2435"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <!-- ic_speed — fonts.google.com/icons -->
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            app:srcCompat="@drawable/ic_speed"
+                            app:tint="#00E676"
+                            android:scaleType="fitCenter"
+                            android:contentDescription="speed" />
+
+                        <TextView
+                            android:id="@+id/tvBestConsumption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="7.2"
+                            android:textColor="#FFFFFF"
+                            android:textSize="28sp"
+                            android:fontFamily="@font/orbitron_bold"
+                            android:layout_marginTop="8dp"
+                            tools:ignore="HardcodedText" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="лучший л/100"
+                            android:textColor="#8892A4"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/inter_regular"
+                            android:layout_marginTop="2dp"
+                            tools:ignore="HardcodedText" />
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <!-- Row 2 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp">
+
+                <!-- Card 3: Потрачено -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardTotalSpent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    app:cardBackgroundColor="#12161F"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="#1E2435"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <!-- ic_payments — fonts.google.com/icons -->
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            app:srcCompat="@drawable/ic_payments"
+                            app:tint="#F5A623"
+                            android:scaleType="fitCenter"
+                            android:contentDescription="payments" />
+
+                        <TextView
+                            android:id="@+id/tvTotalSpent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="45 230 ₽"
+                            android:textColor="#FFFFFF"
+                            android:textSize="22sp"
+                            android:fontFamily="@font/orbitron_bold"
+                            android:layout_marginTop="8dp"
+                            tools:ignore="HardcodedText" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="потрачено"
+                            android:textColor="#8892A4"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/inter_regular"
+                            android:layout_marginTop="2dp"
+                            tools:ignore="HardcodedText" />
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Card 4: Заправлено (литров) -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardTotalLiters"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    app:cardBackgroundColor="#12161F"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="#1E2435"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <!-- ic_local_gas_station — fonts.google.com/icons -->
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            app:srcCompat="@drawable/ic_local_gas_station"
+                            app:tint="#F5A623"
+                            android:scaleType="fitCenter"
+                            android:contentDescription="local_gas_station" />
+
+                        <TextView
+                            android:id="@+id/tvTotalLiters"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="780.5 л"
+                            android:textColor="#FFFFFF"
+                            android:textSize="22sp"
+                            android:fontFamily="@font/orbitron_bold"
+                            android:layout_marginTop="8dp"
+                            tools:ignore="HardcodedText" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="заправлено"
+                            android:textColor="#8892A4"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/inter_regular"
+                            android:layout_marginTop="2dp"
+                            tools:ignore="HardcodedText" />
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <!-- ── 3b. CHART: Расход л/100 км ─────────── -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="РАСХОД Л/100 КМ"
+                android:textColor="#8892A4"
+                android:textSize="12sp"
+                android:fontFamily="@font/inter_regular"
+                android:letterSpacing="0.1"
+                android:layout_marginTop="24dp"
+                tools:ignore="HardcodedText" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="#12161F"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#1E2435"
+                app:strokeWidth="1dp">
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/chartConsumption"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@android:color/transparent"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp" />
+                <!--
+                Настроить в onViewCreated:
+                chartConsumption.apply {
+                    setBackgroundColor(Color.TRANSPARENT)
+                    description.isEnabled = false
+                    legend.isEnabled = false
+                    setTouchEnabled(true)
+                    xAxis.apply {
+                        textColor = Color.parseColor("#8892A4")
+                        textSize = 10f
+                        position = XAxis.XAxisPosition.BOTTOM
+                        setDrawGridLines(false)
+                        setDrawAxisLine(false)
+                    }
+                    axisLeft.apply {
+                        textColor = Color.parseColor("#8892A4")
+                        textSize = 10f
+                        gridColor = Color.parseColor("#1E2435")
+                        setDrawAxisLine(false)
+                    }
+                    axisRight.isEnabled = false
+                    animateX(1000, Easing.EaseInOutCubic)
+                    // LineDataSet:
+                    // dataSet.color = Color.parseColor("#4FC3F7")
+                    // dataSet.lineWidth = 2f
+                    // dataSet.setCircleColor(Color.parseColor("#4FC3F7"))
+                    // dataSet.circleRadius = 3f
+                    // dataSet.setDrawFilled(true)
+                    // dataSet.fillDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.bg_chart_line_fill)
+                }
+                -->
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ── 3c. CHART: Цена за литр ────────────── -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ЦЕНА ЗА ЛИТР, ₽"
+                android:textColor="#8892A4"
+                android:textSize="12sp"
+                android:fontFamily="@font/inter_regular"
+                android:letterSpacing="0.1"
+                android:layout_marginTop="24dp"
+                tools:ignore="HardcodedText" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="#12161F"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#1E2435"
+                app:strokeWidth="1dp">
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/chartPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:background="@android:color/transparent"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp" />
+                <!--
+                Настроить в onViewCreated:
+                chartPrice.apply {
+                    setBackgroundColor(Color.TRANSPARENT)
+                    description.isEnabled = false
+                    legend.isEnabled = false
+                    xAxis.apply {
+                        textColor = Color.parseColor("#8892A4")
+                        textSize = 10f
+                        position = XAxis.XAxisPosition.BOTTOM
+                        setDrawGridLines(false)
+                        setDrawAxisLine(false)
+                    }
+                    axisLeft.apply {
+                        textColor = Color.parseColor("#8892A4")
+                        textSize = 10f
+                        gridColor = Color.parseColor("#1E2435")
+                        setDrawAxisLine(false)
+                    }
+                    axisRight.isEnabled = false
+                    animateY(800, Easing.EaseInOutCubic)
+                    // BarDataSet:
+                    // dataSet.color = Color.parseColor("#4FC3F7")
+                    // dataSet.setDrawValues(false)
+                    // dataSet.barBorderRadius = 4f  (rounded bars)
+                }
+                -->
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ── 3d. CHART: Расходы по месяцам ─────── -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="РАСХОДЫ ПО МЕСЯЦАМ"
+                android:textColor="#8892A4"
+                android:textSize="12sp"
+                android:fontFamily="@font/inter_regular"
+                android:letterSpacing="0.1"
+                android:layout_marginTop="24dp"
+                tools:ignore="HardcodedText" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="#12161F"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#1E2435"
+                app:strokeWidth="1dp">
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/chartMonthly"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@android:color/transparent"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp" />
+                <!--
+                Настроить в onViewCreated:
+                chartMonthly.apply {
+                    setBackgroundColor(Color.TRANSPARENT)
+                    description.isEnabled = false
+                    legend.isEnabled = false
+                    xAxis.apply {
+                        textColor = Color.parseColor("#8892A4")
+                        textSize = 10f
+                        position = XAxis.XAxisPosition.BOTTOM
+                        setDrawGridLines(false)
+                        setDrawAxisLine(false)
+                        granularity = 1f
+                    }
+                    axisLeft.apply {
+                        textColor = Color.parseColor("#8892A4")
+                        textSize = 10f
+                        gridColor = Color.parseColor("#1E2435")
+                        setDrawAxisLine(false)
+                    }
+                    axisRight.isEnabled = false
+                    animateY(1000, Easing.EaseInOutCubic)
+                    // BarDataSet:
+                    // dataSet.color = Color.parseColor("#F5A623")
+                    // dataSet.setDrawValues(false)
+                    // dataSet.barBorderRadius = 4f
+                }
+                -->
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

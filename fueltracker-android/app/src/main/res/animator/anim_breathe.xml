@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Бесконечная пульсация alpha для View с id=btnGlow.
+    Применить в Kotlin:
+        AnimatorInflater.loadAnimator(requireContext(), R.animator.anim_breathe)
+            .apply { setTarget(btnGlow); start() }
+-->
+<objectAnimator
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:propertyName="alpha"
+    android:valueType="floatType"
+    android:valueFrom="0.4"
+    android:valueTo="0.8"
+    android:duration="1500"
+    android:repeatCount="infinite"
+    android:repeatMode="reverse"
+    android:interpolator="@android:anim/accelerate_decelerate_interpolator" />

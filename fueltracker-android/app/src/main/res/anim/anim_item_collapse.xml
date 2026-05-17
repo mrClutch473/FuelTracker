@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Анимация скрытия блока заметки (обратная к expand).
+    Применять к noteRow перед установкой GONE:
+      val anim = AnimationUtils.loadAnimation(context, R.anim.anim_item_collapse)
+      anim.setAnimationListener(object : Animation.AnimationListener {
+          override fun onAnimationEnd(a: Animation?) { noteRow.visibility = View.GONE }
+          override fun onAnimationStart(a: Animation?) {}
+          override fun onAnimationRepeat(a: Animation?) {}
+      })
+      noteRow.startAnimation(anim)
+-->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/accelerate_interpolator">
+
+    <!-- Fade Out -->
+    <alpha
+        android:duration="250"
+        android:fromAlpha="1.0"
+        android:toAlpha="0.0" />
+
+    <!-- Collapse: scale по Y от 1 до 0, точка трансформации — верхний край -->
+    <scale
+        android:duration="250"
+        android:fromXScale="1.0"
+        android:fromYScale="1.0"
+        android:pivotX="50%"
+        android:pivotY="0%"
+        android:toXScale="1.0"
+        android:toYScale="0.0" />
+
+</set>

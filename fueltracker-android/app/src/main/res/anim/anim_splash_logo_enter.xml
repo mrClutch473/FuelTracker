@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Анимация появления иконки Lottie (delay = 0ms)
+    Применить: lottie_splash_icon.startAnimation(
+                   AnimationUtils.loadAnimation(context, R.anim.anim_splash_logo_enter))
+-->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillAfter="true"
+    android:shareInterpolator="false">
+
+    <!-- Alpha: плавное появление через decelerate (не overshoot — alpha > 1 не имеет смысла) -->
+    <alpha
+        android:fromAlpha="0.0"
+        android:toAlpha="1.0"
+        android:duration="600"
+        android:interpolator="@android:anim/decelerate_interpolator" />
+
+    <!--
+        Scale: пружинящее увеличение 0.8→1.0 с overshoot
+        pivotX/Y = 50% → масштабирование от центра
+    -->
+    <scale
+        android:fromXScale="0.8"
+        android:fromYScale="0.8"
+        android:toXScale="1.0"
+        android:toYScale="1.0"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:duration="600"
+        android:interpolator="@android:anim/overshoot_interpolator" />
+
+</set>

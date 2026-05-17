@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Пружинящий scale-эффект при нажатии на кнопку (300 мс).
+    Применить в Kotlin:
+        btnRefuel.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_DOWN)
+                AnimatorInflater.loadAnimator(requireContext(), R.animator.anim_button_press)
+                    .apply { setTarget(v); start() }
+            false
+        }
+-->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:ordering="sequentially">
+
+    <!-- Phase 1: compress — 1.0 → 0.95 (80ms) -->
+    <set android:ordering="together">
+        <objectAnimator
+            android:propertyName="scaleX"
+            android:valueType="floatType"
+            android:valueFrom="1.0"
+            android:valueTo="0.95"
+            android:duration="80"
+            android:interpolator="@android:anim/accelerate_interpolator" />
+        <objectAnimator
+            android:propertyName="scaleY"
+            android:valueType="floatType"
+            android:valueFrom="1.0"
+            android:valueTo="0.95"
+            android:duration="80"
+            android:interpolator="@android:anim/accelerate_interpolator" />
+    </set>
+
+    <!-- Phase 2: overshoot — 0.95 → 1.05 (120ms) -->
+    <set android:ordering="together">
+        <objectAnimator
+            android:propertyName="scaleX"
+            android:valueType="floatType"
+            android:valueFrom="0.95"
+            android:valueTo="1.05"
+            android:duration="120"
+            android:interpolator="@android:anim/decelerate_interpolator" />
+        <objectAnimator
+            android:propertyName="scaleY"
+            android:valueType="floatType"
+            android:valueFrom="0.95"
+            android:valueTo="1.05"
+            android:duration="120"
+            android:interpolator="@android:anim/decelerate_interpolator" />
+    </set>
+
+    <!-- Phase 3: settle — 1.05 → 1.0 (100ms) -->
+    <set android:ordering="together">
+        <objectAnimator
+            android:propertyName="scaleX"
+            android:valueType="floatType"
+            android:valueFrom="1.05"
+            android:valueTo="1.0"
+            android:duration="100"
+            android:interpolator="@android:anim/decelerate_interpolator" />
+        <objectAnimator
+            android:propertyName="scaleY"
+            android:valueType="floatType"
+            android:valueFrom="1.05"
+            android:valueTo="1.0"
+            android:duration="100"
+            android:interpolator="@android:anim/decelerate_interpolator" />
+    </set>
+
+</set>

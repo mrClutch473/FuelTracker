@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    ColorStateList для android:textColor чипов.
+    Активный чип → янтарный текст.
+    Используется: android:textColor="@drawable/selector_chip_text"
+    Note: на API < 23 лучше вынести в res/color/
+-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true"
+        android:color="#F5A623" />
+    <item android:color="#8892A4" />
+</selector>

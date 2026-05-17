@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Заливка под линией LineChart (Electric Blue → прозрачный).
+    Используется через: dataSet.fillDrawable = ContextCompat.getDrawable(context, R.drawable.bg_chart_line_fill)
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:type="linear"
+        android:angle="270"
+        android:startColor="#334FC3F7"
+        android:endColor="#004FC3F7" />
+</shape>

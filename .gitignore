@@ -1,0 +1,30 @@
+# ── Aider ────────────────────────────────
+.aider*
+.aider.chat.history.md
+.aider.input.history
+
+# ── Python / Backend ─────────────────────
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# ── База данных ───────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+
+# ── Android / Gradle ─────────────────────
+.gradle/
+local.properties
+*.iml
+
+fueltracker-android/.idea/
+fueltracker-android/app/build/
+fueltracker-android/build/
+
+# ── OS ───────────────────────────────────
+.DS_Store
+Thumbs.db

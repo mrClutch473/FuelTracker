@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    BottomSheetDialogFragment layout — Add Refuel form.
+    Keyboard handling (one line in BottomSheetDialogFragment.onCreateDialog):
+    (dialog as BottomSheetDialog).window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_bottom_sheet"
+    android:fitsSystemWindows="true">
+
+    <!-- ═══════════════════════════════════════════════
+         SCROLLABLE ZONE: drag handle + header + fields + total
+         ═══════════════════════════════════════════════ -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:fillViewport="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <!-- ── 1. DRAG HANDLE ──────────────────────────── -->
+            <View
+                android:layout_width="40dp"
+                android:layout_height="4dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/bg_drag_handle" />
+
+            <!-- ── 2. HEADER ───────────────────────────────── -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp">
+
+                <TextView
+                    android:id="@+id/tvSheetTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Новая заправка"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/inter_semibold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnClose"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- ic_close: Material Icons "close" — fonts.google.com/icons?icon=close -->
+                <ImageButton
+                    android:id="@+id/btnClose"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Закрыть"
+                    android:src="@drawable/ic_close"
+                    app:tint="#8892A4"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- ── 3. DIVIDER ──────────────────────────────── -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:background="#1E2435" />
+
+            <!-- ── 4a. FIELD: Литры ────────────────────────── -->
+            <!-- ic_local_gas_station: Material Icons "local_gas_station" — fonts.google.com/icons?icon=local_gas_station -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilLiters"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Литры"
+                app:boxBackgroundColor="#1A1F2E"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxStrokeColor="@color/selector_input_stroke"
+                app:hintTextColor="#8892A4"
+                app:startIconDrawable="@drawable/ic_local_gas_station"
+                app:startIconTint="#F5A623">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etLiters"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#3D4455" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- ── 4b. FIELD: Цена за литр ────────────────── -->
+            <!-- ic_payments: Material Icons "payments" — fonts.google.com/icons?icon=payments -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilPrice"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="Цена за литр, ₽"
+                app:boxBackgroundColor="#1A1F2E"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxStrokeColor="@color/selector_input_stroke"
+                app:hintTextColor="#8892A4"
+                app:startIconDrawable="@drawable/ic_payments"
+                app:startIconTint="#F5A623">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#3D4455" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- ── 4c. FIELD: Пробег ───────────────────────── -->
+            <!-- ic_speed: Material Icons "speed" — fonts.google.com/icons?icon=speed -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilOdometer"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="Показание одометра, км"
+                app:boxBackgroundColor="#1A1F2E"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxStrokeColor="@color/selector_input_stroke"
+                app:hintTextColor="#8892A4"
+                app:startIconDrawable="@drawable/ic_speed"
+                app:startIconTint="#F5A623">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etOdometer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#3D4455" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- ── 4d. FIELD: Заметка ──────────────────────── -->
+            <!-- ic_edit_note: Material Icons "edit_note" — fonts.google.com/icons?icon=edit_note -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilNote"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="Заметка (необязательно)"
+                app:boxBackgroundColor="#1A1F2E"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxStrokeColor="@color/selector_input_stroke"
+                app:hintTextColor="#8892A4"
+                app:startIconDrawable="@drawable/ic_edit_note"
+                app:startIconTint="#F5A623">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#3D4455" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- ── 5. TOTAL SUMMARY CARD ───────────────────── -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="8dp"
+                app:cardBackgroundColor="#1A1F2E"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#F5A623"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <!-- Left: label -->
+                    <TextView
+                        android:id="@+id/tvTotalLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.1"
+                        android:text="ИТОГО"
+                        android:textColor="#8892A4"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/inter_regular"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- Right top: total amount -->
+                    <TextView
+                        android:id="@+id/tvTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 ₽"
+                        android:textColor="#F5A623"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/orbitron_bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- Right bottom: per-litre cost -->
+                    <TextView
+                        android:id="@+id/tvPerLiter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="— ₽/л"
+                        android:textColor="#3D4455"
+                        android:textSize="11sp"
+                        android:fontFamily="@font/inter_regular"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvTotal" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- ═══════════════════════════════════════════════
+         FIXED ZONE: buttons always visible above keyboard
+         ═══════════════════════════════════════════════ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="24dp"
+        android:weightSum="5">
+
+        <!-- Cancel — weight 2 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancel"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="2"
+            android:layout_marginEnd="8dp"
+            android:text="Отмена"
+            android:textColor="#8892A4"
+            android:textSize="14sp"
+            android:fontFamily="@font/inter_regular"
+            app:cornerRadius="12dp"
+            app:strokeColor="#2A3040" />
+
+        <!-- Save — weight 3 | initially disabled (alpha 0.4) -->
+        <!-- ic_check: Material Icons "check" — fonts.google.com/icons?icon=check -->
+        <!-- Animate enable: AnimatorInflater.loadAnimator(ctx, R.animator.anim_save_btn_enable).apply { setTarget(btnSave); start() } -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSave"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="3"
+            android:alpha="0.4"
+            android:text="Сохранить"
+            android:textColor="#0A0D14"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/inter_semibold"
+            app:backgroundTint="#F5A623"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_check"
+            app:iconTint="#0A0D14" />
+
+    </LinearLayout>
+
+</LinearLayout>

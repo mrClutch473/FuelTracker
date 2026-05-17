@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Появление секций: alpha 0→1 + translationY 80px→0 за 400 мс.
+    translationY задаётся в пикселях (≈ 30dp на hdpi-экране).
+    Для точного dp→px преобразования: val px = 30.dp2px(resources)
+
+    Применить в Kotlin (последовательно с задержкой):
+        listOf(fuelGaugeBlock, cardLastRefuel, cardMonthSpent,
+               cardMonthConsumption, btnRefuel)
+            .forEachIndexed { i, view ->
+                view.alpha = 0f
+                view.translationY = 80f
+                AnimatorInflater.loadAnimator(requireContext(), R.animator.anim_fade_slide_up)
+                    .apply { startDelay = i * 80L; setTarget(view); start() }
+            }
+-->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:ordering="together">
+
+    <objectAnimator
+        android:propertyName="alpha"
+        android:valueType="floatType"
+        android:valueFrom="0"
+        android:valueTo="1"
+        android:duration="400"
+        android:interpolator="@android:anim/decelerate_interpolator" />
+
+    <objectAnimator
+        android:propertyName="translationY"
+        android:valueType="floatType"
+        android:valueFrom="80"
+        android:valueTo="0"
+        android:duration="400"
+        android:interpolator="@android:anim/decelerate_interpolator" />
+
+</set>

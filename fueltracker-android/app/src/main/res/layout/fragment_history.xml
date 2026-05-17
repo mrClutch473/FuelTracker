@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A0D14">
+
+    <!-- ═══════════════════════════════════════════════
+         APP BAR
+    ══════════════════════════════════════════════════ -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0A0D14"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#0A0D14"
+            android:paddingHorizontal="4dp"
+            app:titleTextColor="#FFFFFF"
+            app:titleTextAppearance="@style/TextAppearance.AppCompat.Large">
+
+            <!-- Заголовок экрана -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="8dp"
+                android:text="История"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/inter_semibold"
+                tools:ignore="HardcodedText" />
+
+            <!-- Кнопка фильтра справа -->
+            <!-- ic_filter_list — Material Symbol: "filter_list" -->
+            <ImageButton
+                android:id="@+id/btnFilterIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Фильтр"
+                android:padding="8dp"
+                app:srcCompat="@drawable/ic_filter_list"
+                app:tint="#8892A4" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <!-- ═══════════════════════════════════════════════
+             СТРОКА ФИЛЬТРА / СОРТИРОВКИ
+        ══════════════════════════════════════════════════ -->
+        <LinearLayout
+            android:id="@+id/filterRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:background="#0A0D14"
+            android:gravity="center_vertical">
+
+            <!-- Кнопка выбора периода -->
+            <!-- ic_keyboard_arrow_down — Material Symbol: "keyboard_arrow_down" -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFilter"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Всё время"
+                android:textColor="#8892A4"
+                android:textSize="13sp"
+                android:fontFamily="@font/inter_regular"
+                app:icon="@drawable/ic_keyboard_arrow_down"
+                app:iconGravity="end"
+                app:iconTint="#8892A4"
+                app:strokeColor="#2A3040"
+                app:strokeWidth="1dp"
+                app:cornerRadius="8dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="8dp"
+                tools:ignore="HardcodedText" />
+
+            <!-- Spacer -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <!-- Кнопка сортировки -->
+            <!-- ic_swap_vert — Material Symbol: "swap_vert" -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSort"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:padding="0dp"
+                android:minWidth="0dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:icon="@drawable/ic_swap_vert"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconTint="#8892A4"
+                app:strokeColor="#2A3040"
+                app:strokeWidth="1dp"
+                app:cornerRadius="8dp" />
+
+        </LinearLayout>
+
+        <!-- Divider под строкой фильтра -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1E2435" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- ═══════════════════════════════════════════════
+         СПИСОК ЗАПРАВОК
+    ══════════════════════════════════════════════════ -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvHistory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp"
+        android:clipToPadding="false"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:listitem="@layout/item_refuel" />
+
+    <!-- ═══════════════════════════════════════════════
+         EMPTY STATE (скрыт по умолчанию)
+    ══════════════════════════════════════════════════ -->
+    <LinearLayout
+        android:id="@+id/emptyState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:visibility="visible">
+
+        <!--
+            Lottie: empty_state.json
+            Искать «empty box» или «no data» на lottiefiles.com — тёмный стиль.
+            Файл поместить в res/raw/empty_state.json
+        -->
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            app:lottie_rawRes="@raw/empty_state"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Нет заправок"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/inter_semibold"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Добавьте первую заправку\nнажав кнопку на главном экране"
+            android:textColor="#8892A4"
+            android:textSize="14sp"
+            android:fontFamily="@font/inter_regular"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <!-- ══ SPLASH ══════════════════════════════════ -->
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.fueltracker_android.ui.screens.splash.SplashFragment"
+        android:label="Splash"
+        tools:layout="@layout/fragment_splash">
+
+        <action
+            android:id="@+id/action_splash_to_home"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/anim_fade_in"
+            app:exitAnim="@anim/anim_fade_out" />
+    </fragment>
+
+    <!-- ══ HOME ════════════════════════════════════ -->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.fueltracker_android.ui.screens.home.HomeFragment"
+        android:label="Главная"
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_home_to_addRefuel"
+            app:destination="@id/addRefuelFragment"
+            app:enterAnim="@anim/anim_slide_up"
+            app:exitAnim="@anim/anim_fade_out"
+            app:popEnterAnim="@anim/anim_fade_in"
+            app:popExitAnim="@anim/anim_slide_down" />
+
+        <action
+            android:id="@+id/action_home_to_history"
+            app:destination="@id/historyFragment"
+            app:enterAnim="@anim/anim_fade_in"
+            app:exitAnim="@anim/anim_fade_out"
+            app:popEnterAnim="@anim/anim_fade_in"
+            app:popExitAnim="@anim/anim_fade_out" />
+
+        <action
+            android:id="@+id/action_home_to_stats"
+            app:destination="@id/statsFragment"
+            app:enterAnim="@anim/anim_fade_in"
+            app:exitAnim="@anim/anim_fade_out"
+            app:popEnterAnim="@anim/anim_fade_in"
+            app:popExitAnim="@anim/anim_fade_out" />
+    </fragment>
+
+    <!-- ══ HISTORY ══════════════════════════════════ -->
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.example.fueltracker_android.ui.screens.history.HistoryFragment"
+        android:label="История"
+        tools:layout="@layout/fragment_history">
+
+        <action
+            android:id="@+id/action_history_to_home"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/anim_fade_in"
+            app:exitAnim="@anim/anim_fade_out"
+            app:popEnterAnim="@anim/anim_fade_in"
+            app:popExitAnim="@anim/anim_fade_out" />
+
+        <action
+            android:id="@+id/action_history_to_stats"
+            app:destination="@id/statsFragment"
+            app:enterAnim="@anim/anim_fade_in"
+            app:exitAnim="@anim/anim_fade_out"
+            app:popEnterAnim="@anim/anim_fade_in"
+            app:popExitAnim="@anim/anim_fade_out" />
+    </fragment>
+
+    <!-- ══ STATS ════════════════════════════════════ -->
+    <fragment
+        android:id="@+id/statsFragment"
+        android:name="com.example.fueltracker_android.ui.screens.stats.StatsFragment"
+        android:label="Статистика"
+        tools:layout="@layout/fragment_stats">
+
+        <action
+            android:id="@+id/action_stats_to_home"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/anim_fade_in"
+            app:exitAnim="@anim/anim_fade_out"
+            app:popEnterAnim="@anim/anim_fade_in"
+            app:popExitAnim="@anim/anim_fade_out" />
+    </fragment>
+
+    <!-- ══ ADD REFUEL (dialog / BottomSheet) ════════ -->
+    <fragment
+        android:id="@+id/addRefuelFragment"
+        android:name="com.example.fueltracker_android.ui.screens.add.AddRefuelFragment"
+        android:label="Добавить заправку"
+        tools:layout="@layout/fragment_add_refuel" />
+
+</navigation>

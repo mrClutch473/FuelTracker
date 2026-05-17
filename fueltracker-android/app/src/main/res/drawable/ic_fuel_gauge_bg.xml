@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Векторный placeholder для фона FuelGaugeView.
+    Круговая дуга ~300° (с ~8 часов до ~4 часов через 12), как шкала спидометра.
+    Центр: (100,100), радиус дуги: 80.
+    Внешнее кольцо: 92px, внутреннее (track): 80px.
+-->
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- Декоративное внешнее кольцо (тонкое) -->
+    <path
+        android:pathData="
+            M 100,8
+            A 92,92 0 1 1 99.99,8
+            Z"
+        android:strokeColor="#1E2435"
+        android:strokeWidth="1"
+        android:fillColor="@android:color/transparent"
+        android:strokeAlpha="0.6" />
+
+    <!-- Track дуги (фоновая, тёмная) — 300° от 8 o'clock до 4 o'clock -->
+    <!-- Start: (100+80·cos(210°), 100+80·sin(210°)) = (30.7, 140)  -->
+    <!-- End:   (100+80·cos(330°), 100+80·sin(330°)) = (169.3, 140) -->
+    <path
+        android:pathData="
+            M 30.7,140
+            A 80,80 0 1 1 169.3,140"
+        android:strokeColor="#1E2435"
+        android:strokeWidth="12"
+        android:fillColor="@android:color/transparent"
+        android:strokeLineCap="round" />
+
+    <!-- Заполненная дуга (янтарная, ~55% = ~165°) -->
+    <!-- Mid point at ~165° from start, going CCW (short arc from 210° to 45°) -->
+    <!-- End point at angle 210°+165° CW = 375°=15°: (100+80·cos(15°), 100+80·sin(15°)) → wait...-->
+    <!-- Пересчёт: идём по часовой от start (210°) на 165°: 210°-165°=45° (screen CCW) -->
+    <!-- At 45° screen: x=100+80·cos(45°)=156.6, y=100+80·sin(45°)=156.6 — bottom-right -->
+    <!-- Amber arc: start (30.7,140) → end (156.6,156.6), going CCW, small arc -->
+    <path
+        android:pathData="
+            M 30.7,140
+            A 80,80 0 0 0 156.6,156.6"
+        android:strokeColor="#F5A623"
+        android:strokeWidth="12"
+        android:fillColor="@android:color/transparent"
+        android:strokeLineCap="round" />
+
+    <!-- Тик-метки (короткие штрихи по периметру) -->
+    <!-- 6 меток на 300° дуге (шаг 60°) -->
+    <!-- Метка 1: 210° -->
+    <path
+        android:pathData="M 30.7,140 L 38.2,135.0"
+        android:strokeColor="#3D4455"
+        android:strokeWidth="2"
+        android:strokeLineCap="round" />
+    <!-- Метка 2: 270° (самая нижняя) -->
+    <path
+        android:pathData="M 100,180 L 100,172"
+        android:strokeColor="#3D4455"
+        android:strokeWidth="2"
+        android:strokeLineCap="round" />
+    <!-- Метка 3: 330° -->
+    <path
+        android:pathData="M 169.3,140 L 161.8,135.0"
+        android:strokeColor="#3D4455"
+        android:strokeWidth="2"
+        android:strokeLineCap="round" />
+    <!-- Метка центр-верх: 90° (12 часов) -->
+    <path
+        android:pathData="M 100,20 L 100,28"
+        android:strokeColor="#3D4455"
+        android:strokeWidth="2"
+        android:strokeLineCap="round" />
+
+    <!-- Центральная точка оси -->
+    <path
+        android:pathData="
+            M 100,94
+            A 6,6 0 1 0 100.001,94
+            Z"
+        android:fillColor="#F5A623" />
+
+    <!-- Стрелка-игла (placeholder, направление ~55%) -->
+    <!-- От центра (100,100) к точке на дуге (156.6,156.6) - укорочена -->
+    <path
+        android:pathData="M 100,100 L 146,146"
+        android:strokeColor="#F5A623"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:strokeAlpha="0.9" />
+
+    <!-- Контртяга иглы (короткая, обратная сторона) -->
+    <path
+        android:pathData="M 100,100 L 88,88"
+        android:strokeColor="#8892A4"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeAlpha="0.5" />
+
+</vector>

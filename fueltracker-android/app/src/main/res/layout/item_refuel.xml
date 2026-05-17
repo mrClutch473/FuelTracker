@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="#12161F"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:strokeColor="#1E2435"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- ═══════════════════════════════════════════════
+             ЦВЕТНАЯ ПОЛОСКА СЛЕВА — индикатор расхода
+             По умолчанию зелёный (хороший расход).
+             Из кода менять background на:
+               bg_indicator_green  → #00E676
+               bg_indicator_amber  → #F5A623
+               bg_indicator_red    → #FF6B6B
+        ══════════════════════════════════════════════════ -->
+        <View
+            android:id="@+id/viewIndicator"
+            android:layout_width="4dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_indicator_green"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- ═══════════════════════════════════════════════
+             ОСНОВНОЙ КОНТЕНТ
+        ══════════════════════════════════════════════════ -->
+        <LinearLayout
+            android:id="@+id/contentLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/viewIndicator"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- ─── СТРОКА 1: Дата · Литры · Сумма ─── -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <!-- Дата -->
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="14 мая 2025"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/inter_semibold"
+                    tools:ignore="HardcodedText" />
+
+                <!-- Разделитель -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" · "
+                    android:textColor="#3D4455"
+                    android:textSize="12sp"
+                    tools:ignore="HardcodedText" />
+
+                <!-- Литры -->
+                <TextView
+                    android:id="@+id/tvLiters"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="45.5 л"
+                    android:textColor="#8892A4"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/inter_regular"
+                    tools:ignore="HardcodedText" />
+
+                <!-- Spacer -->
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <!-- Сумма -->
+                <TextView
+                    android:id="@+id/tvTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2 645 ₽"
+                    android:textColor="#F5A623"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/jetbrains_mono_medium"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
+            <!-- ─── СТРОКА 2: Одометр · Расход ─── -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <!-- Иконка одометра -->
+                <!-- ic_speed — Material Symbol: "speed" -->
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:contentDescription="Одометр"
+                    app:srcCompat="@drawable/ic_speed"
+                    app:tint="#3D4455" />
+
+                <!-- Показание одометра -->
+                <TextView
+                    android:id="@+id/tvOdometer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="87 450 км"
+                    android:textColor="#8892A4"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/inter_regular"
+                    tools:ignore="HardcodedText" />
+
+                <!-- Разделитель -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" · "
+                    android:textColor="#3D4455"
+                    android:textSize="12sp"
+                    tools:ignore="HardcodedText" />
+
+                <!-- Иконка расхода -->
+                <!-- ic_local_gas_station — Material Symbol: "local_gas_station" -->
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:contentDescription="Расход"
+                    app:srcCompat="@drawable/ic_local_gas_station"
+                    app:tint="#3D4455" />
+
+                <!-- Расход топлива -->
+                <TextView
+                    android:id="@+id/tvConsumption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="8.2 л/100"
+                    android:textColor="#8892A4"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/inter_regular"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
+            <!-- ─── СТРОКА 3: Заметка (скрыта по умолчанию) ─── -->
+            <LinearLayout
+                android:id="@+id/noteRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="#1E2435" />
+
+                <!-- Строка с иконкой и текстом заметки -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <!-- Иконка заметки -->
+                    <!-- ic_edit_note — Material Symbol: "edit_note" -->
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:contentDescription="Заметка"
+                        app:srcCompat="@drawable/ic_edit_note"
+                        app:tint="#3D4455" />
+
+                    <!-- Текст заметки -->
+                    <TextView
+                        android:id="@+id/tvNote"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:text="Заправился на трассе М-4"
+                        android:textColor="#8892A4"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/inter_regular"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        tools:ignore="HardcodedText" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

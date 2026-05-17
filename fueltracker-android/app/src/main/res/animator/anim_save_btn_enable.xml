@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Плавное появление кнопки Сохранить когда все обязательные поля заполнены.
+    Apply (Kotlin):
+        AnimatorInflater.loadAnimator(context, R.animator.anim_save_btn_enable)
+            .apply { setTarget(btnSave); start() }
+    Не забудь также btnSave.isEnabled = true перед/после анимации.
+-->
+<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="250"
+    android:interpolator="@android:interpolator/decelerate_quad"
+    android:propertyName="alpha"
+    android:valueFrom="0.4"
+    android:valueTo="1.0"
+    android:valueType="floatType" />

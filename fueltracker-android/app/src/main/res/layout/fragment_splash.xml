@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A0D14">
+
+    <!-- ═══════════════════════════════════════════════
+         ЦЕНТРАЛЬНАЯ ГРУППА: Lottie-иконка + логотип
+         ═══════════════════════════════════════════════ -->
+
+    <LinearLayout
+        android:id="@+id/logo_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.42">
+
+        <!--
+            Lottie: пульсирующая заправочная станция / капля топлива
+            ┌─ lottiefiles.com → "fuel drop pulse" / "gas station loop"
+            └─ Выбрать тёмную / монохромную анимацию под фон #0A0D14
+            Файл: res/raw/splash_fuel_pulse.json
+
+            Kotlin: lottie_splash_icon.startAnimation(
+                        AnimationUtils.loadAnimation(context, R.anim.anim_splash_logo_enter))
+        -->
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_splash_icon"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:alpha="0"
+            app:lottie_rawRes="@raw/splash_fuel_pulse1"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="16dp" />
+
+        <!--
+            Текстовая группа: появляется с задержкой 200ms
+            Kotlin: text_group.startAnimation(
+                        AnimationUtils.loadAnimation(context, R.anim.anim_splash_text_enter))
+        -->
+        <LinearLayout
+            android:id="@+id/text_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:alpha="0">
+
+            <TextView
+                android:id="@+id/tv_app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FUELTRACKER"
+                android:textSize="32sp"
+                android:textColor="#FFFFFF"
+                android:letterSpacing="0.15"
+                android:fontFamily="@font/orbitron_bold" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="4dp" />
+
+            <TextView
+                android:id="@+id/tv_app_tagline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="учёт топлива"
+                android:textSize="12sp"
+                android:textColor="#8892A4"
+                android:letterSpacing="0.05"
+                android:fontFamily="@font/orbitron_bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- ═══════════════════════════════════════════════
+         НИЖНЯЯ ЗОНА: прогресс-бар + статус (88%)
+         ═══════════════════════════════════════════════ -->
+
+    <!-- Guideline на 88% от верха экрана -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.88" />
+
+    <!--
+        Кастомный прогресс-бар: FrameLayout = трек + заливка
+        200dp × 2dp, cornerRadius 1dp
+    -->
+    <FrameLayout
+        android:id="@+id/progress_container"
+        android:layout_width="200dp"
+        android:layout_height="2dp"
+        app:layout_constraintTop_toTopOf="@+id/guideline_progress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Трек-фон: #1A1F2E, cornerRadius 1dp -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_progress_track" />
+
+        <!--
+            Заполнение: янтарный градиент #F5A623 → #FF6B35
+            scaleX=0 → изначально скрыт; pivotX=0 → рост слева направо
+
+            ВАЖНО в Kotlin (до старта анимации):
+              progress_fill.pivotX = 0f
+
+            Анимация через ObjectAnimator (из res/animator/anim_progress_fill.xml):
+              ObjectAnimator.ofFloat(progress_fill, "scaleX", 0f, 1f).apply {
+                  duration = 1500
+                  interpolator = DecelerateInterpolator()
+                  start()
+              }
+        -->
+        <View
+            android:id="@+id/progress_fill"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_progress_fill"
+            android:scaleX="0"
+            android:pivotX="0" />
+
+    </FrameLayout>
+
+    <!-- Статусная подпись под прогресс-баром -->
+    <TextView
+        android:id="@+id/tv_loading_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Загрузка данных..."
+        android:textSize="11sp"
+        android:textColor="#3D4455"
+        android:fontFamily="@font/orbitron_bold"
+        app:layout_constraintTop_toBottomOf="@+id/progress_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

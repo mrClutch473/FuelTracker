@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Левая цветная полоска карточки заправки — янтарная.
+    Средний расход — нейтральный сигнал.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="#F5A623" />
+
+    <corners
+        android:topLeftRadius="16dp"
+        android:topRightRadius="0dp"
+        android:bottomLeftRadius="16dp"
+        android:bottomRightRadius="0dp" />
+
+</shape>

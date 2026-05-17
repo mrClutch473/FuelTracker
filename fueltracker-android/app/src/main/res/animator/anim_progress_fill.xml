@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    ObjectAnimator: заполнение прогресс-бара (scaleX 0→1 за 1500ms)
+
+    Применить в Kotlin:
+        progress_fill.pivotX = 0f   // ← обязательно до старта!
+        ObjectAnimator.ofFloat(progress_fill, "scaleX", 0f, 1f).apply {
+            duration = 1500
+            interpolator = DecelerateInterpolator()
+            start()
+        }
+
+    Либо через XML-загрузку:
+        val anim = AnimatorInflater.loadAnimator(context, R.animator.anim_progress_fill)
+        anim.setTarget(progress_fill)
+        anim.start()
+-->
+<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:propertyName="scaleX"
+    android:valueFrom="0"
+    android:valueTo="1"
+    android:valueType="floatType"
+    android:duration="1500"
+    android:interpolator="@android:interpolator/decelerate_quad" />
