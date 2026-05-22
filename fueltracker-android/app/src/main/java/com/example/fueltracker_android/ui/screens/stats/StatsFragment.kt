@@ -11,8 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.fueltracker_android.R
-import com.example.fueltracker_android.data.ApiService
-import com.example.fueltracker_android.data.FuelRepository
+import com.example.fueltracker_android.data.AppDependencies
 import com.example.fueltracker_android.databinding.FragmentStatsBinding
 import com.example.fueltracker_android.domain.model.Stats
 import com.example.fueltracker_android.ui.UiState
@@ -28,7 +27,7 @@ class StatsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: StatsViewModel by viewModels {
-        StatsViewModel.factory(FuelRepository(ApiService.create()))
+        StatsViewModel.factory(AppDependencies.repository)
     }
 
     override fun onCreateView(

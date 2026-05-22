@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Auth screen entrance animation: fade-in + slide up.
+    Usage in Kotlin:
+        authCard.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.anim_auth_enter))
+    Optionally stagger elements:
+        logo_group.startAnimation(AnimationUtils.loadAnimation(ctx, R.anim.anim_auth_enter))
+        authCard.postDelayed({
+            authCard.startAnimation(AnimationUtils.loadAnimation(ctx, R.anim.anim_auth_enter))
+        }, 120)
+-->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/decelerate_interpolator">
+    <translate
+        android:duration="450"
+        android:fromYDelta="6%p"
+        android:toYDelta="0" />
+    <alpha
+        android:duration="450"
+        android:fromAlpha="0.0"
+        android:toAlpha="1.0" />
+</set>

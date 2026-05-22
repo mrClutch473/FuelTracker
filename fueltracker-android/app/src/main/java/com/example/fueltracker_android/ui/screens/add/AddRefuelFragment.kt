@@ -13,8 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.fueltracker_android.R
-import com.example.fueltracker_android.data.ApiService
-import com.example.fueltracker_android.data.FuelRepository
+import com.example.fueltracker_android.data.AppDependencies
 import com.example.fueltracker_android.databinding.FragmentAddRefuelBinding
 import com.example.fueltracker_android.ui.UiState
 import kotlinx.coroutines.launch
@@ -25,7 +24,7 @@ class AddRefuelFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: AddRefuelViewModel by viewModels {
-        AddRefuelViewModel.factory(FuelRepository(ApiService.create()))
+        AddRefuelViewModel.factory(AppDependencies.repository)
     }
 
     // Флаг чтобы не запускать anim_save_btn_enable повторно

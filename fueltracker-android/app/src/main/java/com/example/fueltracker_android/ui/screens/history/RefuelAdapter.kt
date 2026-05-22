@@ -4,11 +4,13 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fueltracker_android.R
 import com.example.fueltracker_android.databinding.ItemRefuelBinding
 import com.example.fueltracker_android.domain.model.Refuel
 
@@ -80,12 +82,53 @@ class RefuelAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(refuel: Refuel) {
-            binding.tvDate.text       = refuel.createdAt
-            binding.tvLiters.text     = "${refuel.liters} л"
-            binding.tvTotal.text      = "${refuel.totalCost.toInt()} ₽"
-            binding.tvOdometer.text   = "${refuel.odometer} км"
+            // ── Дата: "2026-05-22T18:53:42" → "22 мая 2026"
+            binding.tvDate.text = formatDate(refuel.createdAt)
+
+            binding.tvLiters.text   = "${refuel.liters} л"
+            binding.tvTotal.text    = "${refuel.totalCost.toInt()} ₽"
+            binding.tvOdometer.text = "${refuel.odometer} км"
             binding.tvConsumption.text = refuel.consumption
-                ?.let { "$it л/100" } ?: "—"
+                ?.let { "${it} л/100" } ?: "—"
+
+            // ── Заметка: показываем строку только если есть текст
+            if (!refuel.note.isNullOrBlank()) {
+                binding.noteRow.visibility = View.VISIBLE
+                binding.tvNote.text = refuel.note
+            } else {
+                binding.noteRow.visibility = View.GONE
+            }
+
+            // ── Цветная полоска-индикатор по расходу топлива
+            val indicatorRes = when {
+                refuel.consumption == null  -> R.drawable.bg_indicator_amber // первая заправка
+                refuel.consumption <= 8.0   -> R.drawable.bg_indicator_green  // хороший расход
+                refuel.consumption <= 12.0  -> R.drawable.bg_indicator_amber  // средний
+                else                        -> R.drawable.bg_indicator_red    // высокий
+            }
+            binding.viewIndicator.setBackgroundResource(indicatorRes)
+        }
+
+        /**
+         * Форматирует ISO-строку даты в читаемый вид.
+         * "2026-05-22T18:53:42" → "22 мая 2026"
+         */
+        private fun formatDate(isoDate: String): String {
+            return try {
+                val datePart = isoDate.substring(0, 10)   // "2026-05-22"
+                val parts    = datePart.split("-")
+                val day      = parts[2].toInt()
+                val monthIdx = parts[1].toInt() - 1
+                val year     = parts[0]
+
+                val months = arrayOf(
+                    "января", "февраля", "марта", "апреля", "мая", "июня",
+                    "июля", "августа", "сентября", "октября", "ноября", "декабря"
+                )
+                "$day ${months[monthIdx]} $year"
+            } catch (e: Exception) {
+                isoDate
+            }
         }
     }
 

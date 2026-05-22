@@ -39,8 +39,7 @@
                 android:fontFamily="@font/inter_semibold"
                 tools:ignore="HardcodedText" />
 
-            <!-- Кнопка фильтра справа -->
-            <!-- ic_filter_list — Material Symbol: "filter_list" -->
+            <!-- Кнопка фильтра «только с заметками» (иконка справа) -->
             <ImageButton
                 android:id="@+id/btnFilterIcon"
                 android:layout_width="40dp"
@@ -48,7 +47,7 @@
                 android:layout_gravity="end"
                 android:layout_marginEnd="8dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Фильтр"
+                android:contentDescription="Только с заметками"
                 android:padding="8dp"
                 app:srcCompat="@drawable/ic_filter_list"
                 app:tint="#8892A4" />
@@ -68,35 +67,83 @@
             android:background="#0A0D14"
             android:gravity="center_vertical">
 
-            <!-- Кнопка выбора периода -->
-            <!-- ic_keyboard_arrow_down — Material Symbol: "keyboard_arrow_down" -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnFilter"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:text="Всё время"
-                android:textColor="#8892A4"
-                android:textSize="13sp"
-                android:fontFamily="@font/inter_regular"
-                app:icon="@drawable/ic_keyboard_arrow_down"
-                app:iconGravity="end"
-                app:iconTint="#8892A4"
-                app:strokeColor="#2A3040"
-                app:strokeWidth="1dp"
-                app:cornerRadius="8dp"
-                android:paddingStart="12dp"
-                android:paddingEnd="8dp"
-                tools:ignore="HardcodedText" />
-
-            <!-- Spacer -->
-            <View
+            <!-- Чипы периода: Всё время / День / Неделя / Месяц -->
+            <HorizontalScrollView
                 android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:scrollbars="none"
+                android:paddingEnd="8dp">
 
-            <!-- Кнопка сортировки -->
-            <!-- ic_swap_vert — Material Symbol: "swap_vert" -->
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupPeriod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:singleSelection="true"
+                    app:selectionRequired="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipAll"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:text="Всё время"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/inter_regular"
+                        android:checked="true"
+                        android:textColor="@drawable/selector_chip_text"
+                        app:chipBackgroundColor="@drawable/selector_chip_background"
+                        app:chipStrokeColor="@drawable/selector_chip_stroke"
+                        app:chipStrokeWidth="1dp"
+                        tools:ignore="HardcodedText" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipDay"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:text="День"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/inter_regular"
+                        android:textColor="@drawable/selector_chip_text"
+                        app:chipBackgroundColor="@drawable/selector_chip_background"
+                        app:chipStrokeColor="@drawable/selector_chip_stroke"
+                        app:chipStrokeWidth="1dp"
+                        tools:ignore="HardcodedText" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipWeek"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:text="Неделя"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/inter_regular"
+                        android:textColor="@drawable/selector_chip_text"
+                        app:chipBackgroundColor="@drawable/selector_chip_background"
+                        app:chipStrokeColor="@drawable/selector_chip_stroke"
+                        app:chipStrokeWidth="1dp"
+                        tools:ignore="HardcodedText" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipMonth"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:text="Месяц"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/inter_regular"
+                        android:textColor="@drawable/selector_chip_text"
+                        app:chipBackgroundColor="@drawable/selector_chip_background"
+                        app:chipStrokeColor="@drawable/selector_chip_stroke"
+                        app:chipStrokeWidth="1dp"
+                        tools:ignore="HardcodedText" />
+
+                </com.google.android.material.chip.ChipGroup>
+
+            </HorizontalScrollView>
+
+            <!-- Кнопка сортировки (активная = amber) -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSort"
                 style="@style/Widget.Material3.Button.OutlinedButton"
@@ -153,11 +200,6 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:visibility="visible">
 
-        <!--
-            Lottie: empty_state.json
-            Искать «empty box» или «no data» на lottiefiles.com — тёмный стиль.
-            Файл поместить в res/raw/empty_state.json
-        -->
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="160dp"
             android:layout_height="160dp"

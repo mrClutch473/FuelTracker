@@ -11,11 +11,6 @@ __pycache__/
 *.pyo
 .env
 
-# ── База данных ───────────────────────────
-*.db
-*.sqlite
-*.sqlite3
-
 # ── Android / Gradle ─────────────────────
 .gradle/
 local.properties

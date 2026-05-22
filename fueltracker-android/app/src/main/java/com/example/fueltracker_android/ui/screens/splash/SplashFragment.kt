@@ -34,7 +34,7 @@ class SplashFragment : Fragment() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             if (isAdded) {
-                findNavController().navigate(R.id.action_splash_to_home)
+                findNavController().navigate(R.id.action_splash_to_login)
             }
         }, 2500)
     }

@@ -12,8 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.fueltracker_android.R
-import com.example.fueltracker_android.data.ApiService
-import com.example.fueltracker_android.data.FuelRepository
+import com.example.fueltracker_android.data.AppDependencies
 import com.example.fueltracker_android.databinding.FragmentHomeBinding
 import com.example.fueltracker_android.domain.model.Refuel
 import com.example.fueltracker_android.domain.model.Stats
@@ -28,7 +27,7 @@ class HomeFragment : Fragment() {
     private var breatheAnimator: Animator? = null
 
     private val viewModel: HomeViewModel by viewModels {
-        HomeViewModel.factory(FuelRepository(ApiService.create()))
+        HomeViewModel.factory(AppDependencies.repository)
     }
 
     override fun onCreateView(

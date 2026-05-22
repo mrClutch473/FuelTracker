@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Register screen fragment.
+
+    Navigation setup (in nav_graph.xml):
+      <action android:id="@+id/action_register_to_login" app:destination="@id/loginFragment" />
+      <action android:id="@+id/action_register_to_home" app:destination="@id/homeFragment" />
+
+    Entrance animation in Kotlin (onViewCreated):
+        val enterAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.anim_auth_enter)
+        binding.logoGroup.startAnimation(enterAnim)
+        binding.authCard.postDelayed({
+            binding.authCard.startAnimation(
+                AnimationUtils.loadAnimation(requireContext(), R.anim.anim_auth_enter)
+            )
+        }, 120L)
+
+    Shake on error:
+        binding.tilConfirmPassword.startAnimation(
+            AnimationUtils.loadAnimation(requireContext(), R.anim.anim_shake))
+        binding.tilConfirmPassword.error = "Пароли не совпадают"
+
+    Tab click:
+        binding.tabLogin.setOnClickListener {
+            findNavController().navigate(R.id.action_register_to_login)
+        }
+
+    Register button enable logic (same pattern as btnSave in AddRefuelFragment):
+        val watcher = object : TextWatcher { ... }
+        fun validateForm() {
+            val valid = etEmail.text.isNotBlank()
+                && etPassword.text.length >= 6
+                && etConfirmPassword.text.toString() == etPassword.text.toString()
+            btnRegister.isEnabled = valid
+            btnRegister.alpha = if (valid) 1f else 0.4f
+        }
+
+    Btn glow breathe:
+        AnimatorInflater.loadAnimator(requireContext(), R.animator.anim_breathe)
+            .apply { setTarget(binding.btnGlow); start() }
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A0D14">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:overScrollMode="never"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingTop="72dp"
+            android:paddingBottom="40dp">
+
+            <!-- ═══════════════════════════════════════
+                 LOGO GROUP
+            ════════════════════════════════════════ -->
+
+            <!-- Amber radial glow behind logo -->
+            <View
+                android:id="@+id/logoGlow"
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:layout_marginTop="-70dp"
+                android:background="@drawable/bg_auth_logo_glow"
+                android:alpha="0.55"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/logoGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FUELTRACKER"
+                    android:textColor="#FFFFFF"
+                    android:textSize="30sp"
+                    android:letterSpacing="0.15"
+                    android:fontFamily="@font/orbitron_bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="учёт топлива"
+                    android:textColor="#8892A4"
+                    android:textSize="12sp"
+                    android:letterSpacing="0.05"
+                    android:fontFamily="@font/orbitron_bold" />
+
+            </LinearLayout>
+
+            <!-- ═══════════════════════════════════════
+                 AUTH CARD
+            ════════════════════════════════════════ -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/authCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:cardBackgroundColor="#12161F"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#1E2435"
+                app:strokeWidth="1dp"
+                app:layout_constraintTop_toBottomOf="@id/logoGroup"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <!-- ── TAB SWITCHER ─────────────────────── -->
+                    <!--
+                        "Регистрация" is SELECTED (bright bg, white text).
+                        "Войти" is INACTIVE (transparent bg, grey text).
+                        Navigate to LoginFragment on tabLogin.click.
+                    -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:orientation="horizontal"
+                        android:background="@drawable/bg_auth_tab_container"
+                        android:padding="4dp">
+
+                        <TextView
+                            android:id="@+id/tabLogin"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Войти"
+                            android:textColor="#3D4455"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/inter_regular"
+                            android:background="@android:color/transparent" />
+
+                        <TextView
+                            android:id="@+id/tabRegister"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Регистрация"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/inter_semibold"
+                            android:background="@drawable/bg_auth_tab_selected" />
+
+                    </LinearLayout>
+
+                    <!-- ── GREETING ─────────────────────────── -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:text="Создать аккаунт"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/inter_semibold"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Заполните данные для регистрации"
+                        android:textColor="#8892A4"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/inter_regular" />
+
+                    <!-- ── FIELD: Email ──────────────────────── -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilEmail"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:hint="Email"
+                        app:boxBackgroundColor="#1A1F2E"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxStrokeColor="@color/selector_input_stroke"
+                        app:hintTextColor="#8892A4"
+                        app:startIconDrawable="@drawable/ic_email"
+                        app:startIconTint="#F5A623">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textEmailAddress"
+                            android:textColor="#FFFFFF"
+                            android:textColorHint="#3D4455"
+                            android:imeOptions="actionNext" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- ── FIELD: Пароль ─────────────────────── -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilPassword"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:hint="Пароль"
+                        app:boxBackgroundColor="#1A1F2E"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxStrokeColor="@color/selector_input_stroke"
+                        app:hintTextColor="#8892A4"
+                        app:startIconDrawable="@drawable/ic_lock"
+                        app:startIconTint="#F5A623"
+                        app:endIconMode="password_toggle"
+                        app:endIconTint="#8892A4"
+                        app:helperText="Минимум 6 символов"
+                        app:helperTextTextColor="#3D4455">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPassword"
+                            android:textColor="#FFFFFF"
+                            android:textColorHint="#3D4455"
+                            android:imeOptions="actionNext" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- ── FIELD: Повторите пароль ────────────── -->
+                    <!--
+                        In Kotlin — real-time match check:
+                        etConfirmPassword.addTextChangedListener(object : TextWatcher {
+                            override fun afterTextChanged(s: Editable?) {
+                                if (s.toString() != etPassword.text.toString()) {
+                                    tilConfirmPassword.error = "Пароли не совпадают"
+                                } else {
+                                    tilConfirmPassword.error = null
+                                    tilConfirmPassword.isErrorEnabled = false
+                                }
+                                validateForm()
+                            }
+                            ...
+                        })
+                    -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilConfirmPassword"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:hint="Повторите пароль"
+                        app:boxBackgroundColor="#1A1F2E"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxStrokeColor="@color/selector_input_stroke"
+                        app:hintTextColor="#8892A4"
+                        app:startIconDrawable="@drawable/ic_lock"
+                        app:startIconTint="#F5A623"
+                        app:endIconMode="password_toggle"
+                        app:endIconTint="#8892A4">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etConfirmPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPassword"
+                            android:textColor="#FFFFFF"
+                            android:textColorHint="#3D4455"
+                            android:imeOptions="actionDone" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- ── TERMS hint ─────────────────────────── -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="14dp">
+
+                        <!-- ic_info: Material Icon "info" — fonts.google.com/icons?icon=info -->
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@android:drawable/ic_dialog_info"
+                            app:tint="#3D4455"
+                            android:contentDescription="Info" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:text="Регистрируясь, вы соглашаетесь с условиями использования"
+                            android:textColor="#3D4455"
+                            android:textSize="11sp"
+                            android:fontFamily="@font/inter_regular" />
+
+                    </LinearLayout>
+
+                    <!-- ── REGISTER BUTTON + GLOW ────────────── -->
+                    <!--
+                        Initially disabled (alpha 0.4) until all 3 fields are valid.
+                        Enable / disable same pattern as btnSave in AddRefuelFragment.
+
+                        Breathing glow:
+                          AnimatorInflater.loadAnimator(ctx, R.animator.anim_breathe)
+                              .apply { setTarget(binding.btnGlow); start() }
+                    -->
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:clipChildren="false"
+                        android:clipToPadding="false">
+
+                        <View
+                            android:id="@+id/btnGlow"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/bg_button_glow"
+                            android:alpha="0.5" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnRegister"
+                            style="@style/Widget.Material3.Button"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"
+                            android:alpha="0.4"
+                            android:enabled="false"
+                            android:text="Создать аккаунт"
+                            android:textColor="#0A0D14"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/inter_semibold"
+                            android:letterSpacing="0.01"
+                            app:backgroundTint="#F5A623"
+                            app:cornerRadius="12dp"
+                            app:icon="@drawable/ic_person_add"
+                            app:iconSize="20dp"
+                            app:iconGravity="textStart"
+                            app:iconPadding="8dp"
+                            app:iconTint="#0A0D14" />
+
+                    </FrameLayout>
+
+                    <!-- ── DIVIDER "или" ──────────────────────── -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="20dp">
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"
+                            android:background="#1E2435" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginEnd="12dp"
+                            android:text="или"
+                            android:textColor="#3D4455"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/inter_regular" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"
+                            android:background="#1E2435" />
+
+                    </LinearLayout>
+
+                    <!-- ── SWITCH TO LOGIN ───────────────────── -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="4dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Уже есть аккаунт? "
+                            android:textColor="#8892A4"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/inter_regular" />
+
+                        <TextView
+                            android:id="@+id/tvGoToLogin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Войти"
+                            android:textColor="#F5A623"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/inter_semibold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ═══════════════════════════════════════
+                 VERSION TAG (bottom-center)
+            ════════════════════════════════════════ -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="v1.0 · FuelTracker"
+                android:textColor="#2A3040"
+                android:textSize="11sp"
+                android:fontFamily="@font/orbitron_bold"
+                android:letterSpacing="0.05"
+                app:layout_constraintTop_toBottomOf="@id/authCard"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
